@@ -8,6 +8,7 @@ public class SvobodaDictionary {
 	
 	//Constructor
 	//fileName: Name of the .txt file (include .txt tag) stored in the txt folder
+	//To change: Create from dictionary folder, folder to be updated through client
 	public SvobodaDictionary(String fileName) {
 		SvobodaDictionary = new TreeMap<Character, TreeSet<String>>();
 		
