@@ -15,6 +15,7 @@ public class SvobodaDictionary {
 		try {
 			input = new Scanner(new File("../txt/" + fileName));
 		} catch (FileNotFoundException e) {
+			System.out.println("File not found");
 			System.exit(1);
 		}
 		
@@ -43,4 +44,10 @@ public class SvobodaDictionary {
 			System.out.println();
 		}
 	}
+	
+	//findByLetters(String letters)
+	//	Finds words with letters in specific order
+	
+	//findByLetters(String letters, int min, int max)
+	// Finds words with letters in specific order and range of length
 }
