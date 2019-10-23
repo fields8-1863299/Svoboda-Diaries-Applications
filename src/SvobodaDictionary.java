@@ -55,33 +55,76 @@ public class SvobodaDictionary {
 	//ExportCSV: Exports the current collection to a csv file with letters as rows and the words
 	// mapped to those letter as cols
 	//filename: Path + name of file, MUST END IN .CSV
-	public void exportCSV(String filename) throws IOException {
-		try (FileWriter writer = new FileWriter(new File("../csv/" + filename))) {
-		
-		for (int i = 0; i <= findMax(); i++) {
-			writer.append(i + ",");
-		}
-		
-		writer.append("\n");
-		
-		for (char letter: SvobodaDictionary.keySet()) {
-			writer.append(letter + ",");
-			
-			for (String word: SvobodaDictionary.get(letter)) {
-				writer.append(word + ",");
-			}
-			
-			writer.append("\n");
-		}
-		
-		writer.flush();
-		writer.close();
-		
-		} catch (FileNotFoundException e) {
-			
+	//type: String indicating format of csv file,
+	//			v - view, rows a-z, cols words begining with letter in row
+	//			r - reading, 1 row containing all the words for fast import reading
+	public void exportCSV(String filename, String type) throws IOException {
+		if (type.toLowerCase().equals("v")) {
+			exportCSVView(filename);
+		} else if (type.toLowerCase().equals("r")) {
+			exportCSVRead(filename);
+		} else {
+			System.out.println("Please enter an export type");
 		}
 	}
 	
+	private void exportCSVView(String filename) throws IOException {
+		try (FileWriter writer = new FileWriter(new File("../csv/view/" + filename))) {
+			writer.append("0");
+			
+			for (int i = 1; i <= findMax(); i++) {
+				writer.append("," + i);
+			}
+			
+			writer.append("\n");
+			
+			for (char letter: SvobodaDictionary.keySet()) {
+				writer.append(letter);
+				
+				for (String word: SvobodaDictionary.get(letter)) {
+					writer.append("," + word);
+				}
+				
+				writer.append("\n");
+			}
+			
+			writer.flush();
+			writer.close();
+			
+			} catch (FileNotFoundException e) {
+				
+			}
+	}
+	
+	private void exportCSVRead(String filename) throws IOException {
+			try (FileWriter writer = new FileWriter(new File("../csv/read" + filename))) {
+			
+			for (int i = 0; i <= findMax(); i++) {
+				writer.append(i + ",");
+			}
+			
+			writer.append("\n");
+			
+			for (char letter: SvobodaDictionary.keySet()) {
+				writer.append(letter + ",");
+				
+				for (String word: SvobodaDictionary.get(letter)) {
+					writer.append(word + ",");
+				}
+				
+				writer.append("\n");
+			}
+			
+			writer.flush();
+			writer.close();
+			
+			} catch (FileNotFoundException e) {
+				
+			}
+	}
+	
+	//Helper method for exportCSV
+	//Returns the size of the largest set of words in the dictionary
 	private int findMax() {
 		int max = 0;
 		for (char letter: SvobodaDictionary.keySet()) {
