@@ -62,12 +62,16 @@ public class SvobodaDictionary {
 			writer.append(i + ",");
 		}
 		
+		writer.append("\n");
+		
 		for (char letter: SvobodaDictionary.keySet()) {
 			writer.append(letter + ",");
 			
 			for (String word: SvobodaDictionary.get(letter)) {
 				writer.append(word + ",");
 			}
+			
+			writer.append("\n");
 		}
 		
 		writer.flush();
