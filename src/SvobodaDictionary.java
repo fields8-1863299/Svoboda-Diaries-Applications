@@ -68,8 +68,11 @@ public class SvobodaDictionary {
 		}
 	}
 	
+	//Helper method for viewing
 	private void exportCSVView(String filename) throws IOException {
+		//try catch might not be necessary
 		try (FileWriter writer = new FileWriter(new File("../csv/view/" + filename))) {
+			//for correct indexing
 			writer.append("0");
 			
 			for (int i = 1; i <= findMax(); i++) {
@@ -78,6 +81,7 @@ public class SvobodaDictionary {
 			
 			writer.append("\n");
 			
+			//writes out for each word that starts with certain letter
 			for (char letter: SvobodaDictionary.keySet()) {
 				writer.append(letter);
 				
@@ -96,23 +100,13 @@ public class SvobodaDictionary {
 			}
 	}
 	
+	//helper method to reading
 	private void exportCSVRead(String filename) throws IOException {
-			try (FileWriter writer = new FileWriter(new File("../csv/read" + filename))) {
-			
-			for (int i = 0; i <= findMax(); i++) {
-				writer.append(i + ",");
-			}
-			
-			writer.append("\n");
-			
+			try (FileWriter writer = new FileWriter(new File("../csv/read/" + filename))) {
 			for (char letter: SvobodaDictionary.keySet()) {
-				writer.append(letter + ",");
-				
 				for (String word: SvobodaDictionary.get(letter)) {
 					writer.append(word + ",");
 				}
-				
-				writer.append("\n");
 			}
 			
 			writer.flush();
