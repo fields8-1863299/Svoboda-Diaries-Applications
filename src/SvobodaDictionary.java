@@ -54,6 +54,39 @@ public class SvobodaDictionary {
 	
 	//ExportCSV: Exports the current collection to a csv file with letters as rows and the words
 	// mapped to those letter as cols
+	//filename: Path + name of file, MUST END IN .CSV
+	public void exportCSV(String filename) throws IOException {
+		try (FileWriter writer = new FileWriter(new File("../csv/" + filename))) {
+		
+		for (int i = 0; i <= findMax(); i++) {
+			writer.append(i + ",");
+		}
+		
+		for (char letter: SvobodaDictionary.keySet()) {
+			writer.append(letter + ",");
+			
+			for (String word: SvobodaDictionary.get(letter)) {
+				writer.append(word + ",");
+			}
+		}
+		
+		writer.flush();
+		writer.close();
+		
+		} catch (FileNotFoundException e) {
+			
+		}
+	}
+	
+	private int findMax() {
+		int max = 0;
+		for (char letter: SvobodaDictionary.keySet()) {
+			if (max < SvobodaDictionary.get(letter).size()) {
+				max = SvobodaDictionary.get(letter).size();
+			}
+		}
+		return max;
+	}
 	
 	//findByLetters(String letters)
 	//	Finds words with letters in specific order
