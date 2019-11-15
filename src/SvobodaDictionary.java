@@ -131,24 +131,58 @@ public class SvobodaDictionary {
 		return max;
 	}
 	
-	//findByLetters(String letters)
-	//	Finds words with letters in specific order
-	/*
-	public Set<String> findByLetters(String letters) {
-		Set<String> words = new TreeSet<>();
-		Set<String> letters = new TreeSet<>();
+
+	//Finds words with letters in specific order that exist in the dictionary
+	// Returns words as Queue of Strings
+	public Queue<String> findByLetters(String pattern) {
+		Queue<String> words = new LinkedList<>();
 		
-		//Constructs list of the letters
-		for (int i = 0; i < letters.length(); i++) {
-			letters.add(letters.charAt(i));
+		for (char letter: SvobodaDictionary.keySet()) {
+			for (String word: SvobodaDictionary.get(letter)) {
+				if (findByLettersHelper(word, pattern)) {
+					words.add(word);
+				}
+			}
 		}
 		
-		//helper method nested in for each loop to find words that match letter order
-		
-		
+		return(words);	
 	}
-	*/
 	
-	//findByLetters(String letters, int min, int max)
-	// Finds words with letters in specific order and range of length
+	//Finds words with letters in specific order and range of length that exist in dictionary
+	public Queue<String> findByLetters(String pattern, int min, int max) {
+		Queue<String> words = findByLetters(pattern);
+		int size = words.size();
+		
+		for (int i = 0; i < size; i++) {
+			String word = words.remove();
+			
+			if (word.length() >= min && word.length() <= max) {
+				words.add(word);
+			}
+		}
+		
+		return words;
+	}
+	
+	// Finds words with letters in specific order and length
+	public Queue<String> findByLetters(String pattern, int length) {
+		return findByLetters(pattern, length, length);
+	}
+	
+	//Helper method for findByLetters
+	//	Takes in word being considered and a sequence of letters its looking for
+	//	If the word contains letters in that sequence in the pattern returns true
+	private boolean findByLettersHelper(String word, String pattern) {
+		if (pattern.length() == 0) {
+			return true;
+		} else if (word.length() == 0) {
+			return false;
+		}
+		
+		if (word.charAt(0) == pattern.charAt(0)) {
+			return findByLettersHelper(word.substring(1), pattern.substring(1));
+		} else {
+			return findByLettersHelper(word.substring(1), pattern);
+		}
+	}
 }
