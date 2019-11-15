@@ -22,6 +22,8 @@ public class SvobodaDictionary {
 		
 		//updates SvobodaDictionary
 		while (input.hasNext()) {
+			
+			
 			String word = input.next().toLowerCase();
 			//strip word
 			word = word.replaceAll("[^a-zA-Z ]", "");
